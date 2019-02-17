@@ -7,7 +7,26 @@ var urlsToCache = [
 self.onmessage = function(e){
   console.log(e.data);
   if( e.data == 'request' ){
-     self.postMessage({name:'Mai Chan'});
+     
+     var request = new XMLHttpRequest();
+      request.open('GET', 'data.json', true);
+
+    request.onload = function() {
+      if (this.status >= 200 && this.status < 400) {
+        // Success!
+        var resp = this.response;
+        self.postMessage(resp);
+      } else {
+        // We reached our target server, but it returned an error
+
+      }
+    };
+
+    request.onerror = function() {
+      // There was a connection error of some sort
+    };
+
+    request.send();
   }
 }
 
